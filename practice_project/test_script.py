@@ -9,6 +9,10 @@ def test_prime_numbers():
     assert is_prime(17) == True
     assert is_prime(19) == True
     
+    assert is_prime(23) == True
+    assert is_prime(29) == True
+
+    
 
 
 def test_non_prime_numbers():
