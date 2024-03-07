@@ -1,4 +1,4 @@
-import pytest
+# import pytest
 from .script import is_prime
 
 
