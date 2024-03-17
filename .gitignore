@@ -3,4 +3,13 @@ venv/
 __pycache__/
 .pytest_cache/
 .DS_Store
+.idea
+
 practice_project/.DS_Store
+
+week_3_dependency_injection/.DS_Store
+week_3_dependency_injection/venv/
+week_3_dependency_injection/.idea
+
+
+
