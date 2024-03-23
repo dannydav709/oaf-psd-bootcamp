@@ -1,34 +1,43 @@
 from abc import ABC, abstractmethod
 import requests
-from dataclasses import dataclass
 
-# @dataclass
-class API_Factory():
+class AbstractDataService(ABC):
+    @abstractmethod
+    def fetch_data(self):
+        pass
+
+class APICallingService(AbstractDataService):
     def __init__(self, url):
         self.url = url
 
     def fetch_data(self):
         response = requests.get(self.url)
-        if 200 <= response.status_code <= 299:
-            data = response.json()
+        if response.ok:
+            return response.json()
         else:
-            data = None
-        return data
+            return None
 
+class DataServiceFactory:
+    def create_data_service(self, url) -> AbstractDataService:
+        return APICallingService(url)
 
-class Weather_API(API_Factory):
-    # def __init__(self, url):
-    #     self.url = url
-    def __init__(self, url="https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m"):
-        super().__init__(url)
+class DataSourceHandler:
+    def __init__(self, data_service: AbstractDataService):
+        self.data_service = data_service
 
+    def handle_data(self):
+        data = self.data_service.fetch_data()
+        if data is not None:
+            print(data)  # Or any other processing
+        else:
+            print("Failed to fetch data.")
 
 def main():
-    open_meteo = Weather_API()
-    print(open_meteo.fetch_data())
-
+    factory = DataServiceFactory()
+    data_service = factory.create_data_service("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41"
+                                               "&hourly=temperature_2m")
+    data_handler = DataSourceHandler(data_service)
+    data_handler.handle_data()
 
 if __name__ == "__main__":
     main()
-
-
