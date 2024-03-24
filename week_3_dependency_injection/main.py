@@ -28,7 +28,8 @@ class DataSourceHandler:
     def handle_data(self):
         data = self.data_service.fetch_data()
         if data is not None:
-            print(data)  # Or any other processing
+            # print(data)  # Or any other processing
+            return data
         else:
             print("Failed to fetch data.")
 
@@ -37,7 +38,7 @@ def main():
     data_service = factory.create_data_service("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41"
                                                "&hourly=temperature_2m")
     data_handler = DataSourceHandler(data_service)
-    data_handler.handle_data()
+    print(data_handler.handle_data())
 
 if __name__ == "__main__":
     main()
